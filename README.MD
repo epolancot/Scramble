@@ -34,8 +34,6 @@ Main screen displays a list of the scrambles in which the user is a participant 
 
 
 
-### Entity Relationship Diagram (EDR)
+### Entity Relationship Diagram (ERD)
 ![ERD](/public/images/readme/ERD.png)
-
-
 
