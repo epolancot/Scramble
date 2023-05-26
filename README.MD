@@ -10,7 +10,7 @@
 ## **Description**
 Scramble brings two things: democracy and an end to decision fatige. From organizing a reading club to figuring out your next secret santa, scramble is the perfect tool to organize everyone's interests. 
 
-Want to start a movie club and dont want to arge about which movie to watch first? Scramble it! 
+Want to start a movie club and don't want to argue about which movie to watch first? Scramble it! 
 
 --
 ### **Technologies, Libraries and Frameworks Used**
