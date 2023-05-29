@@ -1,5 +1,29 @@
 <%- include("../partials/header") %>
-<div class="flex-wrapper">
-    Create New
-</div>
-<%- include("../partials/footer") %>
+<main class="container">
+    <div class="flex-wrapper">
+        <div class="bg-light p-5 rounded mt-3">
+            <form>
+                <div class="mb-3">
+                    <label for="inputTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="inputName" aria-describedby="inputTitleHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="inputDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="inputPrompt" class="form-label">Prompt</label>
+                    <input type="text" class="form-control" id="inputPrompt" aria-describedby="promptHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="inputParticipants" class="form-label">Invite participants</label>
+                    <input type="text" class="form-control" id="inputParticipants" aria-describedby="participantsHelp">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Scramble</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+
+    <%- include("../partials/footer") %>

@@ -7,8 +7,13 @@ router.get('/', function(req, res, next) {
   });
 });
 router.get('/new', function(req, res, next) {
-  res.render('scrambles/create', {
-    title: "Create Scramble"
+  res.render('scrambles/new', {
+    title: "New Scramble"
+  });
+});
+router.get('/friends', function(req, res, next) {
+  res.render('scrambles/friends', {
+    title: "Friends"
   });
 });
 
