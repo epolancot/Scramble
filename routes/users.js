@@ -10,5 +10,10 @@ router.get('/new', function(req, res, next) {
     title: "New User"
   });
 });
+router.get('/friends', function(req, res, next) {
+  res.render('users/friends/index', {
+    title: "New User"
+  });
+});
 
 module.exports = router;

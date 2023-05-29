@@ -12,7 +12,7 @@ router.get('/new', function(req, res, next) {
   });
 });
 router.get('/friends', function(req, res, next) {
-  res.render('scrambles/friends', {
+  res.render('friends/index', {
     title: "Friends"
   });
 });

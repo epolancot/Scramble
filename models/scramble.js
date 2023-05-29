@@ -6,7 +6,7 @@ const ScrambleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    question: String,
+    prompt: String,
     settings: {
     },
     answers: [{
