@@ -10,6 +10,7 @@ const ScrambleSchema = new mongoose.Schema({
     settings: {
     },
     answers: [{
+        number: Number,
         text: String,
         postedBy: {
             type: mongoose.Schema.Types.ObjectId,
