@@ -28,6 +28,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <% if (user) { %>
                     <li class="nav-item">
                         <a class="nav-link <%= homeTab %>" aria-current="page" href="/">Home</a>
                     </li>
@@ -37,9 +38,15 @@
                     <li class="nav-item">
                         <a class="nav-link <%= friendsTab %>" href="/users/friends">Friends</a>
                     </li>
+                    <%}%>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Log out</a>
+                        <a class="nav-link" href="#">About</a>
                     </li>
+                    <% if (user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                    <%}%>
                 </ul>
                 <span class="navbar-text">
                     [ Dark/Light Mode]

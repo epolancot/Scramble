@@ -5,6 +5,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         requried: true
     },
+    googleId: {
+        type: String,
+        required: true
+    },
     age: Number,
     avatar: String,
     email: String,
