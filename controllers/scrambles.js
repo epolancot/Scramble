@@ -4,6 +4,7 @@ const User = require('../controllers/users')
 
 module.exports = {
     index,
+    newView,
     create,
     showScramble
 }
@@ -19,6 +20,19 @@ async function index(req, res) {
             friendsTab: "",
             scrambles: scrambles
         })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function newView(req, res) {
+    try {
+        res.render('scrambles/new', {
+            title: "New Scramble",
+            homeTab: "",
+            newTab: "active",
+            friendsTab: "",
+        });  
     } catch (err) {
         console.log(err)
     }

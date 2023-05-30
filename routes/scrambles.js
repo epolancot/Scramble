@@ -4,11 +4,7 @@ const scrambleCtrl = require('../controllers/scrambles')
 
 
 router.get('/', scrambleCtrl.index)
-router.get('/new', function(req, res, next) {
-  res.render('scrambles/new', {
-    title: "New Scramble"
-  })
-})
+router.get('/new', scrambleCtrl.newView)
 router.get('/view/:id', scrambleCtrl.showScramble)
 router.post('/', scrambleCtrl.create);
 
