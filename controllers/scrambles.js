@@ -14,6 +14,9 @@ async function index(req, res) {
         console.log(scrambles)
         res.render('scrambles/index', {
             title: "Scramble",
+            homeTab: "active",
+            newTab: "",
+            friendsTab: "",
             scrambles: scrambles
         })
     } catch (err) {
@@ -31,13 +34,14 @@ async function create(req, res) {
     }
 }
 
-
 async function showScramble(req, res) {
     try {
         const scramble = await Scramble.findById(req.params.id)
-
         res.render('scrambles/view', {
             title: "Scramble",
+            homeTab: "active",
+            newTab: "",
+            friendsTab: "",
             scramble: scramble
         });  
     } catch (err) {
