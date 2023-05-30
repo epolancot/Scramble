@@ -2,18 +2,18 @@
 <main class="container">
     <div class="flex-wrapper">
         <div class="bg-light p-5 rounded mt-3">
-            <form>
+            <form action="/scrambles" method="POST">
                 <div class="mb-3">
                     <label for="inputTitle" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="inputName" aria-describedby="inputTitleHelp">
+                    <input type="text" class="form-control" id="inputName" aria-describedby="inputTitleHelp" name="title">
                 </div>
                 <div class="mb-3">
                     <label for="inputDescription" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp">
+                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp" name="description">
                 </div>
                 <div class="mb-3">
                     <label for="inputPrompt" class="form-label">Prompt</label>
-                    <input type="text" class="form-control" id="inputPrompt" aria-describedby="promptHelp">
+                    <input type="text" class="form-control" id="inputPrompt" aria-describedby="promptHelp" name="prompt">
                 </div>
                 <button type="submit" class="btn btn-primary">Create Scramble</button>
             </form>
