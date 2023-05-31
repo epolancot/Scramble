@@ -13,6 +13,12 @@ body {
   background-color: white;
 }
 
+.navbar {
+  background-color: rgb(232, 232, 76);
+}
+
+
+
 .footer {
   margin-top: auto;
 }

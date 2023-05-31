@@ -18,12 +18,12 @@
     <title>
         <%= title %>
     </title>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <% if (user) { %>
-                <a class="navbar-brand" href="/scrambles">Scramble{logo}</a>
+                <a class="navbar-brand" href="/scrambles">Scramble</a>
             <% } else { %>
-                <a class="navbar-brand" href="/">Scramble{logo}</a>
+                <a class="navbar-brand" href="/">Scramble</a>
             <% } %>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,11 +47,11 @@
                     </li>
                 </ul>
                 <% if (user) { %>
-                <span class="navbar-text dropdown-menu-end" style="margin-right: 8px;">
-                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 4px;">
+                <span class="navbar-text dropdown-menu-end" style="margin-right: 12px;">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="input-group">
-                            <img class="rounded-circle shadow-4-strong" alt="avatar" src="<%= avatar %>" style="width: 25px; height: 25px;margin-right: 4px;" />
-                            <span style="margin-top: 4px"><%= name %></span>
+                            <img class="rounded-circle shadow border" alt="avatar" src="<%= avatar %>" style="width: 40px; height: 40px;margin-right: 4px;" />
+                            <span style="margin-top: 12px"><%= name %></span>
                         </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">

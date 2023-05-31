@@ -18,7 +18,10 @@ const ScrambleSchema = new mongoose.Schema({
             ref: 'User'
         }
     }],
-    participants: []
+    participants: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+    }]
 },
 {
     timestamps: true

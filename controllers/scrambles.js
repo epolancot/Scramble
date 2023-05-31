@@ -1,4 +1,5 @@
 const Scramble = require('../models/scramble')
+const User = require('../models/user')
 const functionCheck = require('../config/functions')
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
 
 async function index(req, res) {
     try {
-        const scrambles = await Scramble.find({})
+        const scrambles = await Scramble.find({participants:res.locals.user._id})
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
@@ -34,6 +35,7 @@ async function newView(req, res) {
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
+
         res.render('scrambles/new', {
             title: "New Scramble",
             homeTab: "",
@@ -49,8 +51,21 @@ async function newView(req, res) {
 
 async function create(req, res) {
     try {
-        const newScramble = req.body
+        let newScramble = {}
+        newScramble.title = req.body.title
+        newScramble.description = req.body.description
+        newScramble.createdBy = res.locals.user._id
+        newScramble.prompt = req.body.prompt
+        newScramble.answers = {
+            number: 1,
+            text: req.body.answer,
+            postedBy: res.locals.user._id,  
+        }
+        newScramble.participants = res.locals.user._id
+
         await Scramble.create(newScramble)
+
+
         res.redirect('/scrambles');  
     } catch (err) {
         console.log(err)
@@ -62,7 +77,29 @@ async function showScramble(req, res) {
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
-        const scramble = await Scramble.findById(req.params.id)
+        const scramble = await Scramble.findById(req.params.id).populate('answers.postedBy').populate('participants')
+        let userIsCreator = false
+
+        if (scramble.createdBy.toString() === res.locals.user._id.toString()) {
+            userIsCreator = true
+        } 
+
+        // sanitize google info before returning to client
+        scramble.answers.forEach(function(answer){
+            answer.postedBy.googleId = ""
+            answer.postedBy.avatar = ""
+            answer.postedBy.email = ""
+            answer.postedBy.createdAt = null
+            answer.postedBy.updatedAt = null
+        })
+
+        scramble.participants.forEach(function(participant) {
+            participant.googleId = ""
+            participant.email = ""
+            participant.createdAt = null
+            participant.updatedAt = null
+        })
+
         res.render('scrambles/view', {
             title: "Scramble",
             homeTab: "active",
@@ -70,6 +107,7 @@ async function showScramble(req, res) {
             friendsTab: "",
             avatar: avatar,
             name: userFirstName,
+            isCreator: userIsCreator,
             scramble: scramble
         });  
     } catch (err) {
