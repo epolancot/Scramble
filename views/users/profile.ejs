@@ -1,0 +1,26 @@
+<%- include("../partials/header") %>
+<main class="container">
+    <div class="flex-wrapper">
+        <div class="p-5 rounded mt-3">
+            <div class="row">
+                <div class="input-group">
+                    <img class="rounded-circle shadow-4-strong" alt="avatar" src="<%= avatar %>" style="width: 90px; height: 90px;margin-right: 4px;" />
+                    <span style="margin-top: 55px"><h4><%= fullName %></h4></span>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 5px;">
+                <h5>Email:  <%= email %> </h5>
+            </div>
+            <div class="row">
+                <h5>Scrambles created: <%= scramblesCreator %></h5>
+            </div>
+            <div class="row">
+                <h5>Participating in <%= scramblesParticipant %> scrambles.</h5>
+            </div>
+            <div class="row">
+                <h5>Friends: </h5>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include("../partials/footer") %>

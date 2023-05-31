@@ -1,6 +1,5 @@
 const Scramble = require('../models/scramble')
-const User = require('../controllers/users')
-
+const functionCheck = require('../config/functions')
 
 module.exports = {
     index,
@@ -12,26 +11,36 @@ module.exports = {
 async function index(req, res) {
     try {
         const scrambles = await Scramble.find({})
-        console.log(scrambles)
+        const userFullName = res.locals.user.name
+        const avatar = res.locals.user.avatar
+        const userFirstName = functionCheck.prepareUserName(userFullName)
         res.render('scrambles/index', {
             title: "Scramble",
             homeTab: "active",
             newTab: "",
             friendsTab: "",
+            avatar: avatar,
+            name: userFirstName,
             scrambles: scrambles
         })
     } catch (err) {
         console.log(err)
     }
+
 }
 
 async function newView(req, res) {
     try {
+        const userFullName = res.locals.user.name
+        const avatar = res.locals.user.avatar
+        const userFirstName = functionCheck.prepareUserName(userFullName)
         res.render('scrambles/new', {
             title: "New Scramble",
             homeTab: "",
             newTab: "active",
             friendsTab: "",
+            avatar: avatar,
+            name: userFirstName,
         });  
     } catch (err) {
         console.log(err)
@@ -50,12 +59,17 @@ async function create(req, res) {
 
 async function showScramble(req, res) {
     try {
+        const userFullName = res.locals.user.name
+        const avatar = res.locals.user.avatar
+        const userFirstName = functionCheck.prepareUserName(userFullName)
         const scramble = await Scramble.findById(req.params.id)
         res.render('scrambles/view', {
             title: "Scramble",
             homeTab: "active",
             newTab: "",
             friendsTab: "",
+            avatar: avatar,
+            name: userFirstName,
             scramble: scramble
         });  
     } catch (err) {

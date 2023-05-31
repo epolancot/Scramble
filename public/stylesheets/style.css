@@ -9,6 +9,10 @@ body {
   justify-content: flex-start;
 }
 
+.container {
+  background-color: white;
+}
+
 .footer {
   margin-top: auto;
 }
