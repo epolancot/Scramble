@@ -14,9 +14,6 @@ function prepareUserName(name){
     return userFirstName
 }
 
-
-
-
 //------- Input handling functions -------
 function hasWhiteSpace(string) {
     return string.indexOf(' ')>=0

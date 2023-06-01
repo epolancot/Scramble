@@ -9,6 +9,10 @@ const ScrambleSchema = new mongoose.Schema({
     description: String,
     prompt: String,
     settings: {
+        locked: {
+            type: Boolean,
+            default: false
+        }
     },
     answers: [{
         number: Number,
@@ -21,7 +25,7 @@ const ScrambleSchema = new mongoose.Schema({
     participants: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
-    }]
+    }],
 },
 {
     timestamps: true

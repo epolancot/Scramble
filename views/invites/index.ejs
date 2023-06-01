@@ -1,0 +1,14 @@
+<%- include("../partials/header") %>
+    <main role="main" class="container">
+        <div class="starter-template text-center" style="margin-top: 50px;">
+            <h3>You are invited to join<br/>
+                <b><%= sTitle %></b></h3>
+            <p class="lead">
+                <%= description %>
+            </p>
+        </div>
+        <form action="/i/<%= id %>" method="POST">
+            <button type="submit">TEST</button>
+        </form>
+    </main>
+    <%- include("../partials/footer") %>

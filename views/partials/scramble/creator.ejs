@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col">
+        <p>You are the creator</p>
+    </div>
+    <div class="col d-flex justify-content-end">
+        <% if (locked===false) { %>
+            <h4><i class="bi bi-unlock" aria="Lock Scramble" title="Lock Scramble"></i></h4>
+        <% } else {%>
+            <h4><i class="bi bi-lock" aria="Unlock Scramble" title="Unlock Scramble"></i></h4>
+        <% } %>
+    </div>
+</div>
+
+<h2><%= scramble.title %></h2>
+<p><h4><%= scramble.description %></h4></p>
+
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+        <% scramble.participants.forEach(function(participant) { %>
+            <img class="rounded-circle shadow border" alt="avatar" src="<%= participant.avatar %>"
+                style="width: 40px; height: 40px;margin-right: 4px;" />
+            <% }) %>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Answer</th>
+            <th scope="col">Posted By</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% scramble.answers.forEach(function(answer) { %>
+            <tr>
+                <td>
+                    <%= answer.text %>
+                </td>
+                <td>
+                    <%= answer.postedBy.name %>
+                </td>
+            </tr>
+            <% }) %>
+    </tbody>
+</table>
+<div><h4>Share</h4>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Scramble Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">QRCode</a>
+        </li>
+    </ul>
+</div>

@@ -5,19 +5,19 @@
             <form action="/scrambles" method="POST">
                 <div class="mb-3">
                     <label for="inputTitle" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="inputName" aria-describedby="inputTitleHelp" name="title">
+                    <input type="text" class="form-control" id="inputName" aria-describedby="inputTitleHelp" name="title" required>
                 </div>
                 <div class="mb-3">
                     <label for="inputDescription" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp" name="description">
+                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp" name="description" required>
                 </div>
                 <div class="mb-3">
                     <label for="inputPrompt" class="form-label">Prompt</label>
-                    <input type="text" class="form-control" id="inputPrompt" aria-describedby="promptHelp" name="prompt">
+                    <input type="text" class="form-control" id="inputPrompt" aria-describedby="promptHelp" name="prompt" required>
                 </div>
                 <div class="mb-3">
-                    <label for="inputAnswer" class="form-label">Answer</label>
-                    <input type="text" class="form-control" id="inputAnswer" aria-describedby="answerHelp" name="answer">
+                    <label for="inputAnswer" class="form-label">Your Answer</label>
+                    <input type="text" class="form-control" id="inputAnswer" aria-describedby="answerHelp" name="answer" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Create Scramble</button>
             </form>

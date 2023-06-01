@@ -1,11 +1,22 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
+let scrambleID = "/scrambles"
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.redirect('/users/start');
 });
+
+router.post('/i/:id', function(req,res) {
+  scrambleID = "/invite/scramble/"+req.params.id }, passport.authenticate('google',{
+      scope: ['profile', 'email'], 
+      prompt: "select_account",
+      successRedirect: scrambleID,
+      failureRedirect: '/',
+      failureMessage: true
+    }))
 
 // Google Oauth -----------------------------
 // login route
@@ -16,7 +27,7 @@ router.get('/auth/google', passport.authenticate(
     // Requesting the user's profile and email
     scope: ['profile', 'email'],
     // Optionally force pick account every time
-    // prompt: "select_account"
+    //prompt: "select_account"
   }
 ));
 
@@ -24,8 +35,8 @@ router.get('/auth/google', passport.authenticate(
 router.get('/oauth2callback', passport.authenticate(
   'google',
   {
-    successRedirect: '/scrambles',
-    failureRedirect: '/scrambles'
+    successRedirect: '/scramble',
+    failureRedirect: '/'
   }
 ));
 

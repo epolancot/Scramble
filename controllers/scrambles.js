@@ -84,10 +84,9 @@ async function showScramble(req, res) {
             userIsCreator = true
         } 
 
-        // sanitize google info before returning to client
+        // sanitize google info before returning to public scramble
         scramble.answers.forEach(function(answer){
             answer.postedBy.googleId = ""
-            answer.postedBy.avatar = ""
             answer.postedBy.email = ""
             answer.postedBy.createdAt = null
             answer.postedBy.updatedAt = null
@@ -108,6 +107,7 @@ async function showScramble(req, res) {
             avatar: avatar,
             name: userFirstName,
             isCreator: userIsCreator,
+            locked: scramble.settings.locked,
             scramble: scramble
         });  
     } catch (err) {
