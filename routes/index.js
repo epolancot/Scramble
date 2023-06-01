@@ -16,7 +16,7 @@ router.post('/s-oauth2/:id', function(req, res){
       scope: ['profile', 'email'], 
       prompt: "select_account",
       state: scrambleID,
-      failureRedirect: '/',
+      failureRedirect: '/aaaa',
       failureMessage: true
       })(req, res) 
     }
@@ -31,6 +31,7 @@ router.get('/auth/google', function(req, res) {
     // Requesting the user's profile and email
     scope: ['profile', 'email'],
     // Optionally force pick account every time
+    state: "/scrambles",
     //prompt: "select_account"
   }
 ));
