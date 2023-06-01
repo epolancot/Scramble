@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
+const scramble = require('../models/scramble');
 let scrambleID = "/scrambles"
 
 
@@ -9,18 +10,21 @@ router.get('/', function(req, res, next) {
   res.redirect('/users/start');
 });
 
-router.post('/i/:id', function(req,res) {
-  scrambleID = "/invite/scramble/"+req.params.id }, passport.authenticate('google',{
+router.post('/s-oauth2/:id', function(req, res){
+  scrambleID = `/invites/scrambles/${req.params.id}`
+  passport.authenticate('google',{
       scope: ['profile', 'email'], 
       prompt: "select_account",
-      successRedirect: scrambleID,
+      state: scrambleID,
       failureRedirect: '/',
       failureMessage: true
-    }))
-
+      })(req, res) 
+    }
+)
 // Google Oauth -----------------------------
 // login route
-router.get('/auth/google', passport.authenticate(
+router.get('/auth/google', function(req, res) {
+},passport.authenticate(
   // Which passport strategy is being used?
   'google',
   {
@@ -32,13 +36,15 @@ router.get('/auth/google', passport.authenticate(
 ));
 
 // Google OAuth callback route
-router.get('/oauth2callback', passport.authenticate(
-  'google',
-  {
-    successRedirect: '/scramble',
-    failureRedirect: '/'
-  }
-));
+router.get('/oauth2callback', function(req, res) {
+  passport.authenticate(
+    'google',
+    {
+      successRedirect: req.query.state,
+      failureRedirect: '/'
+    }
+  )(req, res)
+});
 
 // OAuth logout route
 router.get('/logout', function(req, res){

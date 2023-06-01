@@ -7,8 +7,12 @@
                 <%= description %>
             </p>
         </div>
-        <form action="/i/<%= id %>" method="POST">
-            <button type="submit">TEST</button>
+        <div class="row d-flex text-center">
+        <form action="/s-oauth2/<%= id %>" method="POST">
+            <button type="submit" class="btn btn-secondary btn-lg">Join this Scramble</button>
+            
         </form>
+        </div>
+        
     </main>
     <%- include("../partials/footer") %>
