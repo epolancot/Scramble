@@ -6,7 +6,9 @@ module.exports = {
     index,
     newView,
     create,
-    showScramble
+    showScramble,
+    edit,
+    update
 }
 
 async function index(req, res) {
@@ -15,6 +17,7 @@ async function index(req, res) {
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
+
         res.render('scrambles/index', {
             title: "Scramble",
             homeTab: "active",
@@ -83,7 +86,6 @@ async function showScramble(req, res) {
         if (scramble.createdBy.toString() === res.locals.user._id.toString()) {
             userIsCreator = true
         } 
-
         // sanitize google info before returning to public scramble
         scramble.answers.forEach(function(answer){
             answer.postedBy.googleId = ""
@@ -91,13 +93,13 @@ async function showScramble(req, res) {
             answer.postedBy.createdAt = null
             answer.postedBy.updatedAt = null
         })
-
         scramble.participants.forEach(function(participant) {
             participant.googleId = ""
             participant.email = ""
             participant.createdAt = null
             participant.updatedAt = null
         })
+        console.log(scramble)
 
         res.render('scrambles/view', {
             title: "Scramble",
@@ -108,8 +110,55 @@ async function showScramble(req, res) {
             name: userFirstName,
             isCreator: userIsCreator,
             locked: scramble.settings.locked,
-            scramble: scramble
+            scramble: scramble,
+            id:res.locals.user._id.toString()
         });  
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function update(req,res) {
+    const scrambleID = req.params.id
+    const userID = req.params.user
+    const newAnswer = req.body.answer
+
+
+    try {
+        await Scramble.findOneAndUpdate({"answers.postedBy": userID},{$set: {"answers.text": newAnswer}})
+
+        res.redirect('/scrambles')
+
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+
+async function edit(req, res) {
+    let description, sTitle, userFirstName, avatar, userAnswer = ""
+    const idx = req.params.id
+    const userFullName = res.locals.user.name
+    avatar = res.locals.user.avatar
+    userFirstName = functionCheck.prepareUserName(userFullName)
+
+    try {
+        const scramble = await Scramble.findById(idx)
+        description = scramble.description
+        sTitle = scramble.title
+
+        res.render('scrambles/participant-edit', {
+            title: "Edit",
+            homeTab: "",
+            newTab: "",
+            friendsTab: "",
+            avatar: avatar,
+            name: userFirstName,
+            scramble: scramble,
+            sTitle: sTitle,
+            description: description,
+            id: idx
+        })
     } catch (err) {
         console.log(err)
     }

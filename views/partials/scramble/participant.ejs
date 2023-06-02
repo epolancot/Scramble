@@ -1,0 +1,41 @@
+<h2><%= scramble.title %></h2>
+<p><h4><%= scramble.description %></h4></p>
+
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+        <% scramble.participants.forEach(function(participant) { %>
+            <img class="rounded-circle shadow border" alt="avatar" src="<%= participant.avatar %>"
+                style="width: 40px; height: 40px;margin-right: 4px;" />
+            <% }) %>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Answer</th>
+            <th scope="col">Posted By</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% scramble.answers.forEach(function(answer) { %>
+            <tr>
+                <td>  
+                    <%= answer.text %>
+                </td>
+                <td>
+                    <%= answer.postedBy.name %>
+                </td>
+                <td>
+                    <% if (locked === false && answer.postedBy._id.toString() === id) { %>
+                    <a href="/scrambles/<%= scramble._id %>/<%= id %>/edit"><i class="bi bi-pencil" style="color:green"></i></button></a>
+                    <% } %>
+
+                </td>
+            </tr>
+            <% }) %>
+    </tbody>
+</table>

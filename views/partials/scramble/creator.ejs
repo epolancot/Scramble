@@ -29,23 +29,30 @@
         <tr>
             <th scope="col">Answer</th>
             <th scope="col">Posted By</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <% scramble.answers.forEach(function(answer) { %>
             <tr>
-                <td>
+                <td>  
                     <%= answer.text %>
                 </td>
                 <td>
                     <%= answer.postedBy.name %>
                 </td>
+                <td>
+                    <% if (locked === false && answer.postedBy._id.toString() === id) { %>
+                    <a href="/scrambles/<%= scramble._id %>/<%= id %>/edit"><i class="bi bi-pencil" style="color:green"></i></button></a>
+                    <% } %>
+                </td>
             </tr>
             <% }) %>
     </tbody>
 </table>
-<div><h4>Share</h4>
-    <ul class="nav nav-tabs">
+<div>
+    <h4>Share</h4>
+    <ul class="nav nav-tabs" id="share" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Scramble Link</a>
         </li>
@@ -53,4 +60,7 @@
             <a class="nav-link" href="#">QRCode</a>
         </li>
     </ul>
+    <div class="tabs-content" id="share-content">
+        <input type="text" value="Link" style="margin-top: 20px;visibility: hidden;">
+    </div>
 </div>

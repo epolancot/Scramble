@@ -4,7 +4,11 @@
     <p><h4><%= scramble.description %></h4></p> 
     <div class="flex-wrapper">
         <div class="p-5 rounded mt-3">
+            <% if (title==="Edit") { %>
+            <form action="/scrambles/<%= scramble._id %>/<%= id %>/update" method="POST">
+            <% } else { %>
             <form action="/invites/scrambles/<%= id %>/join" method="POST">
+            <% } %>
                 <div class="mb-3">
                     <label for="inputAnswer" class="form-label"><%= scramble.prompt %></label>
                     <input type="text" class="form-control" id="inputAnswer" aria-describedby="inputAsnwerHelp" name="answer" required>
