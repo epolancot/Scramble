@@ -10,7 +10,7 @@ module.exports = {
 
 function index(req, res) {
     res.render('users/index', {
-        title: "Friends",
+        title: "Scramble",
         homeTab: "",
         newTab: "",
         friendsTab: "",
