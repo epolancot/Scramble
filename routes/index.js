@@ -23,8 +23,7 @@ router.post('/s-oauth2/:id', function(req, res){
 )
 // Google Oauth -----------------------------
 // login route
-router.get('/auth/google', function(req, res) {
-},passport.authenticate(
+router.get('/auth/google',passport.authenticate(
   // Which passport strategy is being used?
   'google',
   {
