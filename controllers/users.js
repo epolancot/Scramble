@@ -31,7 +31,7 @@ async function friendsIndex(req, res) {
             name: userFirstName,
         })
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }
 
@@ -41,7 +41,6 @@ async function userProfile(req, res) {
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
 
-        console.log(res.locals.user)
         res.render('users/profile', {
             title: "Your Profile",
             homeTab: "",
@@ -56,6 +55,6 @@ async function userProfile(req, res) {
             friends: res.locals.user.friends.length
         })
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }

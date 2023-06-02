@@ -26,7 +26,7 @@ async function index(req, res) {
             id: idx
         })
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 
 }
@@ -56,7 +56,7 @@ async function participate(req, res){
             id: idx
         })
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }
 
@@ -79,6 +79,6 @@ async function join(req, res){
         res.redirect('/scrambles')
 
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }

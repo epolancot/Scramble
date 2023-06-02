@@ -9,5 +9,6 @@ router.get('/view/:id', ensureLoggedIn, scrambleCtrl.showScramble)
 router.get('/:id/:user/edit', ensureLoggedIn, scrambleCtrl.edit);
 router.post('/', ensureLoggedIn, scrambleCtrl.create);
 router.post('/:id/:user/update', ensureLoggedIn, scrambleCtrl.update);
+router.post('/action', ensureLoggedIn, scrambleCtrl.scramble);
 
 module.exports = router;    

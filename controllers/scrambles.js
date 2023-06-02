@@ -8,12 +8,13 @@ module.exports = {
     create,
     showScramble,
     edit,
-    update
+    update,
+    scramble
 }
 
 async function index(req, res) {
     try {
-        const scrambles = await Scramble.find({participants:res.locals.user._id})
+        const scrambles = await Scramble.find({ participants: res.locals.user._id })
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
@@ -28,7 +29,7 @@ async function index(req, res) {
             scrambles: scrambles
         })
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 
 }
@@ -46,9 +47,9 @@ async function newView(req, res) {
             friendsTab: "",
             avatar: avatar,
             name: userFirstName,
-        });  
+        });
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }
 
@@ -62,16 +63,16 @@ async function create(req, res) {
         newScramble.answers = {
             number: 1,
             text: req.body.answer,
-            postedBy: res.locals.user._id,  
+            postedBy: res.locals.user._id,
         }
         newScramble.participants = res.locals.user._id
 
         await Scramble.create(newScramble)
 
 
-        res.redirect('/scrambles');  
+        res.redirect('/scrambles');
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }
 
@@ -85,21 +86,20 @@ async function showScramble(req, res) {
 
         if (scramble.createdBy.toString() === res.locals.user._id.toString()) {
             userIsCreator = true
-        } 
+        }
         // sanitize google info before returning to public scramble
-        scramble.answers.forEach(function(answer){
+        scramble.answers.forEach(function (answer) {
             answer.postedBy.googleId = ""
             answer.postedBy.email = ""
             answer.postedBy.createdAt = null
             answer.postedBy.updatedAt = null
         })
-        scramble.participants.forEach(function(participant) {
+        scramble.participants.forEach(function (participant) {
             participant.googleId = ""
             participant.email = ""
             participant.createdAt = null
             participant.updatedAt = null
         })
-        console.log(scramble)
 
         res.render('scrambles/view', {
             title: "Scramble",
@@ -111,26 +111,26 @@ async function showScramble(req, res) {
             isCreator: userIsCreator,
             locked: scramble.settings.locked,
             scramble: scramble,
-            id:res.locals.user._id.toString()
-        });  
+            id: res.locals.user._id.toString()
+        });
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 }
 
-async function update(req,res) {
+async function update(req, res) {
     const scrambleID = req.params.id
     const userID = req.params.user
     const newAnswer = req.body.answer
 
 
     try {
-        await Scramble.findOneAndUpdate({"answers.postedBy": userID},{$set: {"answers.text": newAnswer}})
+        await Scramble.findOneAndUpdate({ "answers.postedBy": userID }, { $set: { "answers.text": newAnswer } })
 
         res.redirect('/scrambles')
 
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
 
 }
@@ -160,6 +160,43 @@ async function edit(req, res) {
             id: idx
         })
     } catch (err) {
-        console.log(err)
+        let message = `Error: ${err}`
     }
+}
+
+async function scramble(req, res) {
+    const idx = req.body.id
+
+
+    try {
+        const scramble = await Scramble.findById(idx)
+        let answers = scramble.answers
+
+        reOrder(answers)
+
+        await Scramble.findOneAndUpdate({ _id: idx }, { $set: { answers: answers } })
+
+        res.redirect(`/scrambles/view/${idx}`)
+
+    } catch (err) {
+        let message = `Error: ${err}`
+    }
+}
+
+function reOrder(array) {
+    let currentIndex = array.length, randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
 }
