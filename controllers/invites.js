@@ -3,7 +3,8 @@ const functionCheck = require('../config/functions')
 
 module.exports = {
     index,
-    participate
+    participate,
+    join
 }
 
 async function index(req, res) {
@@ -31,13 +32,16 @@ async function index(req, res) {
 }
 
 async function participate(req, res){
+    let description, sTitle, userFirstName, avatar = ""
     const idx = req.params.id
     const userFullName = res.locals.user.name
-    const avatar = res.locals.user.avatar
-    const userFirstName = functionCheck.prepareUserName(userFullName)
-    console.log(idx)
+    avatar = res.locals.user.avatar
+    userFirstName = functionCheck.prepareUserName(userFullName)
+
     try {
         const scramble = await Scramble.findById(idx)
+        description = scramble.description
+        sTitle = scramble.title
 
         res.render('scrambles/participant-edit', {
             title: "Join",
@@ -47,10 +51,33 @@ async function participate(req, res){
             avatar: avatar,
             name: userFirstName,
             scramble: scramble,
-            sTitle: scramble.title,
-            description: scramble.description,
+            sTitle: sTitle,
+            description: description,
             id: idx
         })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function join(req, res){
+    const idx = req.params.id
+    let newParticipantID = res.locals.user._id
+    let answer = req.body.answer
+    let newAnswer = {}
+
+    try {
+        const scramble = await Scramble.findById(idx)
+
+        newAnswer = {
+            number: scramble.answers.length+1,
+            text: answer,
+            postedBy: newParticipantID
+        }
+        await Scramble.findOneAndUpdate({_id:idx},{$push: {answers:newAnswer, participants:newParticipantID}})
+
+        res.redirect('/scrambles')
+
     } catch (err) {
         console.log(err)
     }
