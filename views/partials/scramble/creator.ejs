@@ -4,10 +4,13 @@
     </div>
     <div class="col d-flex justify-content-end">
         <% if (locked===false) { %>
-            <h4><i class="bi bi-unlock" aria="Lock Scramble" title="Lock Scramble"></i></h4>
+            <form action="/scrambles/<%= scramble._id %>/<%= id %>/lock" method="POST">
+            <button class="flat-button" type="submit"><h4>Lock <i class="bi bi-unlock" aria="Lock Scramble" title="Lock Scramble"></i></h4></button>
         <% } else {%>
-            <h4><i class="bi bi-lock" aria="Unlock Scramble" title="Unlock Scramble"></i></h4>
+            <form action="/scrambles/<%= scramble._id %>/<%= id %>/unlock" method="POST">
+            <button class="flat-button" type="submit"><h4>Unlock <i class="bi bi-lock" aria="Unlock Scramble" title="Unlock Scramble"></i></h4></button>
         <% } %>
+    </form>
     </div>
 </div>
 
@@ -53,9 +56,13 @@
 <div>
 
     <div style="margin-bottom: 25px">
-        <form action="/scrambles/action" method="POST">
+        <form action="/scrambles/action-scramble" method="POST">
         <input type="text" value="<%= scramble.id %>" style="visibility: hidden; display:none;" name="id">
-        <button type="submit" class="btn btn-outline-secondary">Scramble!</button>
+        <% if (locked===false) { %>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Scramble must be locked first">Scramble!</button>
+        <% } else { %>
+            <button type="submit" class="btn btn-outline-primary">Scramble!</button>
+        <% } %>
         </form> 
     </div>
     <h4>Share</h4>
@@ -67,10 +74,14 @@
             <a class="nav-link" href="#">QRCode</a>
         </li>
     </ul>
-    <div class="tabs-content" id="share-content">
+    <div class="tabs-content" id="share-content" style="margin-top: 15px;">
+        <% if (locked===false) { %>
         <div class="input-text list-group">
             <input type="text" id="social_input" value="https://scramble-ga.herokuapp.com/invites/<%= scramble._id %>" class="list-group-item">
             <i class="fa fa-copy"></i> 
         </div>
+        <% } else { %>
+        <h5><p>This Scramble is locked. Unlock to invite more participants.</p></h5>
+        <% } %>
     </div>
 </div>

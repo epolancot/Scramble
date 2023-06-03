@@ -8,7 +8,9 @@ module.exports = {
     create,
     showScramble,
     edit,
-    update,
+    lock,
+    unlock,
+    updateAnswer,
     scramble
 }
 
@@ -18,7 +20,6 @@ async function index(req, res) {
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
-
         res.render('scrambles/index', {
             title: "Scramble",
             homeTab: "active",
@@ -39,7 +40,6 @@ async function newView(req, res) {
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
-
         res.render('scrambles/new', {
             title: "New Scramble",
             homeTab: "",
@@ -66,10 +66,7 @@ async function create(req, res) {
             postedBy: res.locals.user._id,
         }
         newScramble.participants = res.locals.user._id
-
         await Scramble.create(newScramble)
-
-
         res.redirect('/scrambles');
     } catch (err) {
         let message = `Error: ${err}`
@@ -83,7 +80,6 @@ async function showScramble(req, res) {
         const userFirstName = functionCheck.prepareUserName(userFullName)
         const scramble = await Scramble.findById(req.params.id).populate('answers.postedBy').populate('participants')
         let userIsCreator = false
-
         if (scramble.createdBy.toString() === res.locals.user._id.toString()) {
             userIsCreator = true
         }
@@ -100,7 +96,6 @@ async function showScramble(req, res) {
             participant.createdAt = null
             participant.updatedAt = null
         })
-
         res.render('scrambles/view', {
             title: "Scramble",
             homeTab: "active",
@@ -118,17 +113,14 @@ async function showScramble(req, res) {
     }
 }
 
-async function update(req, res) {
+async function updateAnswer(req, res) {
     const scrambleID = req.params.id
-    const userID = req.params.user
+    const userID = res.locals.user._id
     const newAnswer = req.body.answer
-
-
+    console.log("ScrambleID:" + scrambleID + " UserID:" + userID + " New:" + newAnswer)
     try {
-        await Scramble.findOneAndUpdate({ "answers.postedBy": userID }, { $set: { "answers.text": newAnswer } })
-
-        res.redirect('/scrambles')
-
+        await Scramble.findOneAndUpdate({_id: scrambleID, "answers.postedBy": userID }, { $set: { "answers.$.text": newAnswer } })
+        res.redirect(`/scrambles/view/${scrambleID}`)
     } catch (err) {
         let message = `Error: ${err}`
     }
@@ -141,12 +133,10 @@ async function edit(req, res) {
     const userFullName = res.locals.user.name
     avatar = res.locals.user.avatar
     userFirstName = functionCheck.prepareUserName(userFullName)
-
     try {
         const scramble = await Scramble.findById(idx)
         description = scramble.description
         sTitle = scramble.title
-
         res.render('scrambles/participant-edit', {
             title: "Edit",
             homeTab: "",
@@ -164,20 +154,36 @@ async function edit(req, res) {
     }
 }
 
+async function lock(req, res) {
+    const scrambleID = req.params.id
+
+    try {
+        await Scramble.findOneAndUpdate({_id: scrambleID}, { $set: { "settings.locked": true } })
+        res.redirect(`/scrambles/view/${scrambleID}`)
+    } catch (err) {
+        let message = `Error: ${err}`
+    }
+}
+
+async function unlock(req, res) {
+    const scrambleID = req.params.id
+    try {
+        await Scramble.findOneAndUpdate({_id: scrambleID}, { $set: { "settings.locked": false } })
+        res.redirect(`/scrambles/view/${scrambleID}`)
+    } catch (err) {
+        let message = `Error: ${err}`
+    }
+}
+
+
 async function scramble(req, res) {
     const idx = req.body.id
-
-
     try {
         const scramble = await Scramble.findById(idx)
         let answers = scramble.answers
-
         functionCheck.reOrder(answers)
-
         await Scramble.findOneAndUpdate({ _id: idx }, { $set: { answers: answers } })
-
         res.redirect(`/scrambles/view/${idx}`)
-
     } catch (err) {
         let message = `Error: ${err}`
     }
