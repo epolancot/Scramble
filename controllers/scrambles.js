@@ -172,7 +172,7 @@ async function scramble(req, res) {
         const scramble = await Scramble.findById(idx)
         let answers = scramble.answers
 
-        reOrder(answers)
+        functionCheck.reOrder(answers)
 
         await Scramble.findOneAndUpdate({ _id: idx }, { $set: { answers: answers } })
 
