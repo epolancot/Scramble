@@ -13,18 +13,18 @@
     </form>
     </div>
 </div>
-
 <h2><%= scramble.title %></h2>
 <p><h4><%= scramble.description %></h4></p>
-
 <div class="row">
     <div class="col">
     </div>
     <div class="col">
+
         <% scramble.participants.forEach(function(participant) { %>
             <img class="rounded-circle shadow border" alt="avatar" src="<%= participant.avatar %>"
                 style="width: 40px; height: 40px;margin-right: 4px;" />
             <% }) %>
+
     </div>
 </div>
 <table class="table table-striped">
@@ -50,7 +50,7 @@
                     <% } %>
                 </td>
             </tr>
-            <% }) %>
+            <%}) %>
     </tbody>
 </table>
 <div>

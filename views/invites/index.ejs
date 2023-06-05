@@ -1,18 +1,24 @@
 <%- include("../partials/header") %>
     <main role="main" class="container">
-        <div class="starter-template text-center" style="margin-top: 50px;">
-            <h3>You are invited to join<br/>
-                <b><%= sTitle %></b></h3>
-            <p class="lead">
-                <%= description %>
-            </p>
-        </div>
-        <div class="row d-flex text-center">
-        <form action="/s-oauth2/<%= id %>" method="POST">
-            <button type="submit" class="btn btn-secondary btn-lg">Join this Scramble</button>
-            
-        </form>
-        </div>
-        
+        <% if (locked === false) { %>
+            <div class="starter-template text-center" style="margin-top: 50px;">
+                <h3>You are invited to join<br/>
+                    <b><%= sTitle %></b></h3>
+                <p class="lead">
+                    <%= description %>
+                </p>
+            </div>
+            <div class="row d-flex text-center">
+            <form action="/s-oauth2/<%= id %>" method="POST">
+                <button type="submit" class="btn btn-secondary btn-lg">Join this Scramble</button>   
+            </form>
+            </div>
+        <% } else { %>
+            <div class="starter-template text-center" style="margin-top: 50px;">
+                    <p class="lead">
+                        This Scramble has been locked by it's creator and is not currently accepting new participants.
+                    </p>
+            </div>
+        <% } %>
     </main>
     <%- include("../partials/footer") %>

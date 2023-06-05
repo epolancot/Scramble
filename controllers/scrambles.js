@@ -16,7 +16,8 @@ module.exports = {
 
 async function index(req, res) {
     try {
-        const scrambles = await Scramble.find({ participants: res.locals.user._id })
+        const userID = res.locals.user._id
+        const scrambles = await Scramble.find({ participants: userID })
         const userFullName = res.locals.user.name
         const avatar = res.locals.user.avatar
         const userFirstName = functionCheck.prepareUserName(userFullName)
@@ -27,12 +28,12 @@ async function index(req, res) {
             friendsTab: "",
             avatar: avatar,
             name: userFirstName,
+            userID: userID,
             scrambles: scrambles
         })
     } catch (err) {
         let message = `Error: ${err}`
     }
-
 }
 
 async function newView(req, res) {
@@ -156,7 +157,6 @@ async function edit(req, res) {
 
 async function lock(req, res) {
     const scrambleID = req.params.id
-
     try {
         await Scramble.findOneAndUpdate({_id: scrambleID}, { $set: { "settings.locked": true } })
         res.redirect(`/scrambles/view/${scrambleID}`)
@@ -174,7 +174,6 @@ async function unlock(req, res) {
         let message = `Error: ${err}`
     }
 }
-
 
 async function scramble(req, res) {
     const idx = req.body.id
